@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="editText">Enter Zip Code E.g. 36105</string>
+    <string name="enter">Enter</string>
+    <string name="weather">WEATHER</string>
+    <string name="weather_status">Weather Status</string>
+    <string name="tempr_status">80 ℉</string>
+    <string name="windspeed">Wind Speed</string>
+    <string name="cloudiness">Cloudiness</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="Sunrise">Sunrise</string>
+    <string name="windstatus">1 m/s</string>
+    <string name="cloudStatus" >Cloud Status</string>
+    <string name="pressureStatus">1035 hpa</string>
+    <string name="humidityStatus">93%</string>
+    <string name="sunset">Sunset</string>
+    <string name="measured">Measured :</string>
+</resources>

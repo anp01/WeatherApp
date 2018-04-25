@@ -7,10 +7,11 @@ package com.example.realnapster.weatherapp.main;
 public interface MainContract {
 
     interface View{
-
+        void showEnterScreen();
     }
 
     interface Presenter{
+        void handleEnterClick(String zip);
 
     }
 

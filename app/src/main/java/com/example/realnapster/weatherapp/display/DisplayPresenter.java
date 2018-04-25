@@ -5,6 +5,7 @@ public class DisplayPresenter implements DisplayContract.Presenter {
     private DisplayContract.View dView;
 
     DisplayPresenter(DisplayContract.View view){
+
         dView = view;
     }
 

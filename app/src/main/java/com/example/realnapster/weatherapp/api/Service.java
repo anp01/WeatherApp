@@ -3,7 +3,7 @@ package com.example.realnapster.weatherapp.api;
 import android.util.Log;
 
 import com.example.realnapster.weatherapp.model.Data;
-import com.example.realnapster.weatherapp.model.WeatherInfo;
+import com.example.realnapster.weatherapp.response.WeatherInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,22 +16,27 @@ public class Service {
     // Zip Code
     private String zip;
     // App ID
-    private final String appId= "ecf3cb32a773ee3e5ef718570372eba0";
+    private final String appId = "ecf3cb32a773ee3e5ef718570372eba0";
 
-    public Service(String zip){
-        this.zip=zip;
+    public Service(String zip) {
+        this.zip = zip;
     }
 
-    public Data responseCall(){
-        data = new Data();
-        Log.e("Response","Inside Response Call");
-        Log.e("Zip",zip);
-        Log.e("AppID",appId);
-        Call<WeatherInfo> call =ApiHandler.getWeatherApi().getWeatherInfo(zip,appId);
-        Log.e("Call",call.toString());
+    public interface ResponseListener {
+        void onResponse(Data data);
+    }
+
+    public void responseCall(final ResponseListener listener) {
+        Log.e("Response", "Inside Response Call");
+        Log.e("Zip", zip);
+        Log.e("AppID", appId);
+        Call<WeatherInfo> call = ApiHandler.getWeatherApi().getWeatherInfo(zip, appId);
+        Log.e("Call", call.toString());
         call.enqueue(new Callback<WeatherInfo>() {
             @Override
-            public void onResponse(Call<WeatherInfo> call,Response<WeatherInfo> response) {
+            public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
+                Log.v("TEST", "success");
+                data = new Data();
                 WeatherInfo weatherInfo = response.body();
                 data.setWeatherStatus(weatherInfo.getWeather().get(0).getDescription());
                 data.setTemperature(weatherInfo.getMain().getTemp().toString());
@@ -42,13 +47,16 @@ public class Service {
                 data.setPressureStatus(weatherInfo.getMain().getPressure().toString());
                 data.setMeasured(weatherInfo.getName());
                 data.setSuccess(true);
+                listener.onResponse(data);
             }
 
             @Override
-            public void onFailure(Call <WeatherInfo> call, Throwable t) {
+            public void onFailure(Call<WeatherInfo> call, Throwable t) {
+                data = new Data();
                 data.setSuccess(false);
+                Log.v("TEST", "fail");
+                listener.onResponse(data);
             }
         });
-    return  data;
     }
 }

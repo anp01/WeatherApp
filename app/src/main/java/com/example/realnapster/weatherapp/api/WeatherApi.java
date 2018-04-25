@@ -1,6 +1,7 @@
 package com.example.realnapster.weatherapp.api;
 
-import com.example.realnapster.weatherapp.model.WeatherInfo;
+
+import com.example.realnapster.weatherapp.response.WeatherInfo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

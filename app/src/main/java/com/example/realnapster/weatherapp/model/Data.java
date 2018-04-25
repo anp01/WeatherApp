@@ -14,6 +14,29 @@ public class Data implements Parcelable {
     private String humidityStatus;
     private String measured;
 
+    protected Data(Parcel in) {
+        temperature = in.readString();
+        weatherStatus = in.readString();
+        windStatus = in.readString();
+        cloudStatus = in.readString();
+        pressureStatus = in.readString();
+        humidityStatus = in.readString();
+        measured = in.readString();
+        success = in.readByte() != 0;
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
+
     public void setSuccess(boolean success) {
         this.success = success;
     }
@@ -33,8 +56,8 @@ public class Data implements Parcelable {
     }
 
     public void setTemperature(String temperature) {
-        int kelvin = Integer.parseInt(temperature);
-        int f = (int) (((kelvin - 273.0) * 9.0/5.0) + 32.0);
+        Double kelvin = Double.parseDouble(temperature);
+        Double f = (((kelvin - 273.0) * 9.0 / 5.0) + 32.0);
         this.temperature = String.valueOf(f);
     }
 
@@ -51,7 +74,7 @@ public class Data implements Parcelable {
     }
 
     public void setWindStatus(String windStatus) {
-        this.windStatus = windStatus+" m/s";
+        this.windStatus = windStatus + " m/s";
     }
 
     public String getCloudStatus() {
@@ -75,7 +98,7 @@ public class Data implements Parcelable {
     }
 
     public void setHumidityStatus(String humidityStatus) {
-        this.humidityStatus = humidityStatus+"%";
+        this.humidityStatus = humidityStatus + "%";
     }
 
     public String getMeasured() {
@@ -93,6 +116,14 @@ public class Data implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        }
+        dest.writeString(temperature);
+        dest.writeString(weatherStatus);
+        dest.writeString(windStatus);
+        dest.writeString(cloudStatus);
+        dest.writeString(pressureStatus);
+        dest.writeString(humidityStatus);
+        dest.writeString(measured);
+        dest.writeByte((byte) (success ? 1 : 0));
+    }
 
 }
